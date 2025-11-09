@@ -156,6 +156,9 @@ export default function Home() {
             {[...Array(20)].map((_, i) => (
               <div key={i} className="confetti" />
             ))}
+            {[...Array(4)].map((_, i) => (
+              <div key={`j-${i}`} className="confetti-j">J</div>
+            ))}
           </div>
           
           <CardTitle className="flex items-center gap-2 text-xl font-bold relative z-10">
@@ -251,7 +254,7 @@ export default function Home() {
                 {isLoading ? (
                   <Loader2 className="w-5 h-5 animate-spin text-white" />
                 ) : (
-                  <Send className="w-5 h-5 text-white" />
+                  <Gift className="w-5 h-5 text-white" />
                 )}
               </Button>
             </form>
