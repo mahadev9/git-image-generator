@@ -5,7 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, ImagePlus, Loader2, Bot, User, Gift, Download, X } from "lucide-react";
+import {
+  Send,
+  ImagePlus,
+  Loader2,
+  Bot,
+  User,
+  Gift,
+  Download,
+  X,
+} from "lucide-react";
 
 interface Message {
   id: string;
@@ -119,7 +128,7 @@ export default function Home() {
       const generatedImages: ImageData[] = data.images
         ? data.images.map((dataUrl: string) => ({
             data: dataUrl,
-            mimeType: dataUrl.split(';')[0].split(':')[1],
+            mimeType: dataUrl.split(";")[0].split(":")[1],
             preview: dataUrl,
           }))
         : undefined;
@@ -171,8 +180,9 @@ export default function Home() {
                     Welcome to Gift Image Generator
                   </p>
                   <p className="text-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-                    Upload images and ask AI to create personalized gift card designs,
-                    add festive elements, and generate creative suggestions
+                    Upload images and ask AI to create personalized gift card
+                    designs, add festive elements, and generate creative
+                    suggestions
                   </p>
                   <div className="mt-8 flex flex-wrap justify-center gap-3 max-w-2xl mx-auto">
                     <div className="px-4 py-2 bg-red-50 dark:bg-red-900/20 rounded-full text-xs text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800">
@@ -209,7 +219,13 @@ export default function Home() {
                     }`}
                   >
                     {message.images && message.images.length > 0 && (
-                      <div className={`gap-3 mb-3 ${message.role === "assistant" ? "grid grid-cols-1" : "grid grid-cols-2"}`}>
+                      <div
+                        className={`gap-3 mb-3 ${
+                          message.role === "assistant"
+                            ? "grid grid-cols-1"
+                            : "grid grid-cols-2"
+                        }`}
+                      >
                         {message.images.map((img, idx) => (
                           <div
                             key={idx}
@@ -218,9 +234,15 @@ export default function Home() {
                           >
                             <img
                               src={img.preview}
-                              alt={`${message.role === "assistant" ? "Generated" : "Uploaded"} ${idx + 1}`}
+                              alt={`${
+                                message.role === "assistant"
+                                  ? "Generated"
+                                  : "Uploaded"
+                              } ${idx + 1}`}
                               className={`rounded-xl border-2 border-white/50 dark:border-slate-600 w-full object-cover transition-transform group-hover:scale-105 ${
-                                message.role === "assistant" ? "h-auto max-h-96" : "h-32"
+                                message.role === "assistant"
+                                  ? "h-auto max-h-96"
+                                  : "h-32"
                               }`}
                             />
                             <button
