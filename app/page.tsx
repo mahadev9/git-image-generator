@@ -147,15 +147,22 @@ export default function Home() {
   // ============================================================================
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-linear-to-br from-red-50 via-amber-50 to-rose-50 dark:from-slate-950 dark:via-red-950 dark:to-slate-900 px-6">
+    <div className="flex items-center justify-center min-h-screen bg-linear-to-br from-red-50 via-green-50 to-emerald-50 dark:from-slate-950 dark:via-green-950 dark:to-slate-900 px-6">
       <Card className="w-full max-w-7xl h-screen flex flex-col shadow-2xl border-0 overflow-hidden backdrop-blur-sm bg-white/95 dark:bg-slate-900/95 rounded-3xl">
         {/* Header */}
-        <CardHeader className="border-b bg-linear-to-r from-red-600 to-amber-600 text-white py-4">
-          <CardTitle className="flex items-center gap-2 text-xl font-bold">
-            <div className="p-1.5 bg-white/20 rounded-lg backdrop-blur-sm">
+        <CardHeader className="border-b bg-linear-to-r from-red-600 to-green-700 text-white py-4 relative overflow-hidden">
+          {/* Animated Confetti */}
+          <div className="absolute inset-0 pointer-events-none">
+            {[...Array(20)].map((_, i) => (
+              <div key={i} className="confetti" />
+            ))}
+          </div>
+          
+          <CardTitle className="flex items-center gap-2 text-xl font-bold relative z-10">
+            <div className="p-1.5 bg-white/20 rounded-lg backdrop-blur-sm ring-2 ring-yellow-400/30">
               <Gift className="w-6 h-6" />
             </div>
-            <div>ThinkGift</div>
+            <div>Gift Box</div>
           </CardTitle>
         </CardHeader>
 
@@ -221,7 +228,7 @@ export default function Home() {
                 size="icon"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={isLoading}
-                className="shrink-0 h-12 w-12 rounded-xl border-2 hover:border-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all dark:border-slate-600 dark:text-gray-100"
+                className="shrink-0 h-12 w-12 rounded-xl border-2 hover:border-green-500 hover:bg-green-50 dark:hover:bg-green-900/20 transition-all dark:border-slate-600 dark:text-gray-100"
               >
                 <ImagePlus className="w-5 h-5" />
               </Button>
@@ -231,7 +238,7 @@ export default function Home() {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Create your perfect gift..."
                 disabled={isLoading}
-                className="flex-1 h-12 rounded-xl border-2 focus-visible:ring-red-500 focus-visible:border-red-500 px-4 text-base bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400"
+                className="flex-1 h-12 rounded-xl border-2 focus-visible:ring-green-600 focus-visible:border-green-600 px-4 text-base bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400"
               />
 
               <Button
@@ -239,7 +246,7 @@ export default function Home() {
                 disabled={
                   isLoading || (!input.trim() && selectedImages.length === 0)
                 }
-                className="shrink-0 h-12 px-6 rounded-xl bg-linear-to-r from-red-600 to-amber-600 hover:from-red-700 hover:to-amber-700 shadow-md hover:shadow-lg transition-all text-white"
+                className="shrink-0 h-12 px-6 rounded-xl bg-linear-to-r from-red-600 to-green-700 hover:from-red-700 hover:to-green-800 shadow-md hover:shadow-lg transition-all text-white"
               >
                 {isLoading ? (
                   <Loader2 className="w-5 h-5 animate-spin text-white" />

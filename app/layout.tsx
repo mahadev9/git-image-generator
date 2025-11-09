@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ThinkGift - AI Powered",
+  title: "Gift Box - AI Powered",
   description: "Create personalized gift images with AI assistance",
 };
 
