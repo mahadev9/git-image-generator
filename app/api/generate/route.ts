@@ -1,12 +1,58 @@
 import OpenAI, { toFile } from "openai";
 import { NextRequest, NextResponse } from "next/server";
+import Bottleneck from "bottleneck";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || "",
 });
 
+// In-memory rate limiter: 1 request per minute per IP
+// Using a Map to store limiters per IP
+const limiters = new Map<string, Bottleneck>();
+
+function getRateLimiter(ip: string): Bottleneck {
+  if (!limiters.has(ip)) {
+    limiters.set(
+      ip,
+      new Bottleneck({
+        minTime: 60000, // 60 seconds minimum between requests (1 per minute)
+        maxConcurrent: 1, // One request at a time
+      })
+    );
+  }
+  return limiters.get(ip)!;
+}
+
 export async function POST(req: NextRequest) {
   try {
+    // Get client IP
+    const ip =
+      req.headers.get("x-forwarded-for") ||
+      req.headers.get("x-real-ip") ||
+      "anonymous";
+
+    const limiter = getRateLimiter(ip);
+
+    // Try to acquire a token from the rate limiter
+    try {
+      await limiter.schedule(async () => {
+        // This is just to check rate limit, actual work happens after
+        return true;
+      });
+    } catch (error) {
+      return NextResponse.json(
+        {
+          error: "Rate limit exceeded. Maximum 3 requests per minute allowed.",
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": "60",
+          },
+        }
+      );
+    }
+
     const { prompt, images } = await req.json();
 
     if (!process.env.OPENAI_API_KEY) {
